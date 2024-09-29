@@ -1,0 +1,13 @@
+#  This property file contains environment agnostic properties
+
+# HTTPS Properties
+http:
+  host: "0.0.0.0"
+  
+# API Spec Properties
+api:
+  groupId: "${api.groupId}"
+  artifactId: "${api.artifactId}"
+  version: "${api.version}"
+  spec: "resource::${api.groupId}:${api.artifactId}:${api.version}:raml:zip:${api.ramlId}.raml"
+  majorVersion: "v1"

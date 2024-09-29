@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.mycompany</groupId>
+	<artifactId><!-- NOME DA API--></artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>mule-application</packaging>
+
+	<name>portal-web-clientes-e-api</name>
+
+	<parent>
+		<groupId><!-- GroupID do POM parent --></groupId>
+		<artifactId><!--Artifact ID do POM Parent--></artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>./parent-pom.xml</relativePath>
+	</parent>
+
+	<properties>
+		<api.groupId>${mssvc.ap.orgid}</api.groupId>
+		<api.artifactId>portal-web-e-api</api.artifactId>
+		<api.version>1.0.0</api.version>
+		<api.ramlId>portal-web-e-api</api.ramlId>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>${api.groupId}</groupId>
+			<artifactId>${api.artifactId}</artifactId>
+			<version>${api.version}</version>
+			<classifier>raml</classifier>
+			<type>zip</type>
+		</dependency>
+	</dependencies>
+
+</project>

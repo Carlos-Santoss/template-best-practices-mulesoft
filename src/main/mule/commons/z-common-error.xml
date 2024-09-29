@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd 
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+
+
+
+	<error-handler name="api-main-error-handler">
+		<on-error-propagate type="APIKIT:BAD_REQUEST">
+			<ee:transform>
+				<ee:message>
+					<ee:set-payload resource="dwl/error/c-api-kit-bad-request.dwl" />
+				</ee:message>
+				<ee:variables>
+					<ee:set-variable variableName="httpStatus">400</ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+		</on-error-propagate>
+
+
+
+		<on-error-propagate type="APIKIT:NOT_FOUND">
+			<ee:transform>
+				<ee:message>
+					<ee:set-payload resource="dwl/error/c-api-kit-not-found.dwl" />
+				</ee:message>
+				<ee:variables>
+					<ee:set-variable variableName="httpStatus">404</ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+		</on-error-propagate>
+
+
+
+		<on-error-propagate type="APIKIT:METHOD_NOT_ALLOWED">
+			<ee:transform>
+				<ee:message>
+					<ee:set-payload resource="dwl/error/c-api-kit-method-not-allowed.dwl" />
+				</ee:message>
+				<ee:variables>
+					<ee:set-variable variableName="httpStatus">405</ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+		</on-error-propagate>
+
+
+
+		<on-error-propagate type="APIKIT:NOT_ACCEPTABLE">
+			<ee:transform>
+				<ee:message>
+					<ee:set-payload resource="dwl/error/c-api-kit-not-acceptable.dwl" />
+				</ee:message>
+				<ee:variables>
+					<ee:set-variable variableName="httpStatus">406</ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+		</on-error-propagate>
+
+
+
+		<on-error-propagate type="APIKIT:UNSUPPORTED_MEDIA_TYPE">
+			<ee:transform>
+				<ee:message>
+					<ee:set-payload resource="dwl/error/c-api-kit-unsupported-media-type.dwl" />
+				</ee:message>
+				<ee:variables>
+					<ee:set-variable variableName="httpStatus">415</ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+		</on-error-propagate>
+
+
+
+		<on-error-propagate type="APIKIT:NOT_IMPLEMENTED">
+			<ee:transform>
+				<ee:message>
+					<ee:set-payload resource="dwl/error/c-api-kit-not-implemented.dwl" />
+				</ee:message>
+				<ee:variables>
+					<ee:set-variable variableName="httpStatus">501</ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+		</on-error-propagate>
+	</error-handler>
+
+	<error-handler name="api-console-error-handler">
+		<on-error-propagate type="APIKIT:NOT_FOUND">
+			<ee:transform>
+				<ee:message>
+					<ee:set-payload resource="dwl/error/c-api-kit-not-found.dwl" />
+				</ee:message>
+				<ee:variables>
+					<ee:set-variable variableName="httpStatus">404</ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+		</on-error-propagate>
+	</error-handler>
+	
+	<sub-flow
+		name="cf-error::log"
+		doc:id="d12c7f4d-0b87-4f98-a8f3-b98af6a1ecbf">
+		<logger
+			level="INFO"
+			doc:name="Logger"
+			doc:id="ed7ada46-7505-4c87-8fb5-5c56d065d0bf" />
+	</sub-flow>
+	
+	<sub-flow
+		name="cf-error::badRequest"
+		doc:id="5cfead33-a173-419a-b433-5daa9eb267aa">
+		
+		<flow-ref
+			doc:name="error::log"
+			doc:id="c3982b81-b5c1-46a5-845a-8c126bfc5953"
+			name="cf-error::log" />
+			
+		<ee:transform
+			doc:name="payload"
+			doc:id="3b717883-c0ad-4b83-89c7-19fcdd22e82f">
+			
+			<ee:message>
+				<ee:set-payload resource="dwl/error/c-bad-request-error.dwl" />
+			</ee:message>
+			
+			<ee:variables>
+				<ee:set-variable variableName="httpStatus"><![CDATA[400]]></ee:set-variable>
+			</ee:variables>
+			
+		</ee:transform>
+		
+	</sub-flow>
+	
+	<sub-flow
+		name="cf-error::notFound"
+		doc:id="78b154e5-2462-4e23-94df-0518f4ff7118">
+		
+		<flow-ref
+			doc:name="error::log"
+			doc:id="416c5bfe-c940-4abb-b477-efa7345a8c30"
+			name="cf-error::log" />
+			
+		<ee:transform
+			doc:name="notFound"
+			doc:id="80811ece-2d8a-42d7-9bb4-56b236d84f36">
+			
+			<ee:message>
+				<ee:set-payload resource="dwl/error/c-not-found-error.dwl" />
+			</ee:message>
+			
+			<ee:variables>
+				<ee:set-variable variableName="httpStatus"><![CDATA[404]]></ee:set-variable>
+			</ee:variables>
+			
+		</ee:transform>
+		
+	</sub-flow>
+	
+	<sub-flow
+		name="cf-error::internalServerError"
+		doc:id="0b240f08-c81c-4299-835e-e648394404bf">
+		
+		<flow-ref
+			doc:name="error::log"
+			doc:id="72ce1444-a11f-40d6-9fe5-10a6b95c1c0f"
+			name="cf-error::log" />
+			
+		<ee:transform
+			doc:name="internalServerError"
+			doc:id="11f819df-ce88-428b-84bb-2afc8c50c79e">
+			
+			<ee:message>
+				<ee:set-payload resource="dwl/error/c-internal-server-error.dwl" />
+			</ee:message>
+			
+			<ee:variables>
+				<ee:set-variable variableName="httpStatus"><![CDATA[500]]></ee:set-variable>
+			</ee:variables>
+			
+		</ee:transform>
+		
+	</sub-flow>
+	
+	<sub-flow
+		name="cf-payload-http-request-Error"
+		doc:id="7cb8cd67-661f-400f-bb53-b84ca6169940">
+		
+		<ee:transform
+			doc:name="Transform Message"
+			doc:id="b760cafc-d10b-4d04-ac45-cf6487505993">
+			
+			<ee:message>
+				<ee:set-payload resource="dwl/error/c-stubs-http-error.dwl" />
+			</ee:message>
+			
+		</ee:transform>
+		
+	</sub-flow>
+	
+</mule>

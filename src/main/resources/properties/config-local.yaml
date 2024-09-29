@@ -1,0 +1,17 @@
+#  This file contains properties meant to be used in LOCAL Environment
+
+
+http:
+  protocol: "HTTP"
+  port: "8081"
+    
+api:
+  id: "9999999"
+ 
+# Example Connection
+#example:
+#  host: "example.us-e2.cloudhub.io"
+#  port: "80"
+#  protocol: "HTTP"
+#  path: "/api/"
+#  timeout: "400000"

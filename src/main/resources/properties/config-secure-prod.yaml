@@ -1,0 +1,6 @@
+#  This file contains properties meant to be used in PRODUCTION Environment
+
+auth:
+  muleInternalCredential:
+    client_id: "![]"
+    client_secret: "![]"

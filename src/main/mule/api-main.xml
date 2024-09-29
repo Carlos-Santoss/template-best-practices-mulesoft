@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="api-main" doc:id="2341c544-b9fa-42ca-9d96-6496989b3421" >
+		<http:listener doc:name="Listener" doc:id="9f4b835c-2b74-46b1-9148-21d9a302fa16" config-ref="api-http-listener_config" path="/*"/>
+		<apikit:router doc:name="APIkit Router" doc:id="1c88aa97-af38-4699-a817-f0675ef15742" config-ref="apikit-router_config"/>
+	</flow>
+	<flow name="api-console" doc:id="fe39f754-b02e-45a8-8ad2-1a32f8f262f1" >
+		<http:listener doc:name="Listener" doc:id="18a9e49a-a562-4f19-846f-5cb3c4130434" config-ref="api-http-listener_config" path="/console/*"/>
+		<apikit:console doc:name="APIkit Console" doc:id="daa95ad6-b5bc-4421-92c5-4bbe248bef24" config-ref="apikit-router_config"/>
+	</flow>
+</mule>

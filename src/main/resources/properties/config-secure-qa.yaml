@@ -1,0 +1,13 @@
+#  This file contains properties meant to be used in QAS Environment
+
+#auth:
+  #system:
+    #username: "![encodedUsername]"
+    #password: "![encodedPassword]"
+  
+  
+auth:
+  muleInternalCredential:
+    client_id: "![]"
+    client_secret: "![]"
+
